@@ -9,6 +9,7 @@
 #include <algorithm>
 #include <limits>
 #include <string>
+enum Color{WHITE, GRAY, BLACK};
 struct MyVertex {
     std::string name;
 
@@ -45,8 +46,17 @@ private:
 
     std::vector<MyVertex> vertices;
     std::vector<Edge> edges;
+    std::vector<std::vector<MyVertex>> components;
+    bool cyclic = false;
 
     bool compareEdge(MyVertex v1, MyVertex v2, int weight);
+    int dfs();
+    void dfsVisit(MyVertex v, std::vector<Color> &colors, int time);
+    Color colorOfVertex(MyVertex v, std::vector<Color> colors);
+    int indexOfVertex(MyVertex v);
+
+
+
 
 public:
     /* Erzeugt einen neuen Graphen */
@@ -79,6 +89,20 @@ public:
     sind. */
     std::vector<MyVertex> getAdjacentVertices(MyVertex v);
 
+    //Aufgabe 2:
+
+    // Liefert true wenn der Graph verbunden ist, sonst false.
+    bool isConnected();
+
+    // Gibt die Anzahl der Komponenten des Graphen zurück.
+    int getNumberOfComponents();
+
+    /* Gibt die Knoten aller Komponenten aus (eine Zeile pro
+    Komponente). */
+    void printComponents();
+
+    // Liefert true wenn der Graph Zyklen enthält, sonst false.
+    bool isCyclic();
 };
 
 #endif //FPS3_UE09_MC1910237017_GRAPH_H

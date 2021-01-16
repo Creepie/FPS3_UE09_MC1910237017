@@ -9,16 +9,22 @@ int main() {
     MyVertex *v1 = new MyVertex("mario");
     MyVertex *v2 = new MyVertex("paul");
     MyVertex *v3 = new MyVertex("Stefan");
+    MyVertex *v4 = new MyVertex("Selin");
+    MyVertex *v5 = new MyVertex("Luki");
 
     h->insertVertex(*v1);
     h->insertVertex(*v2);
     h->insertVertex(*v3);
+    h->insertVertex(*v4);
+    h->insertVertex(*v5);
+
 
     h->insertVertex(*new MyVertex("mario"));
 
     cout << h->insertEdge(*v1,*v2,2) << endl;
     cout << h->insertEdge(*v1,*v2,2) << endl;
     cout << h->insertEdge(*v1,*v3,3) << endl;
+    cout << h->insertEdge(*v4,*v5,5) << endl;
 
     cout << h->getEdgeWeight(*v1,*v2) << endl;
     cout << h->getEdgeWeight(*v1,*v3) << endl;
@@ -50,6 +56,9 @@ int main() {
         cout << res.at(i) << endl;
     }
 
+    h->printComponents();
+    cout << h->getNumberOfComponents() << endl;
+    cout << h->isCyclic() << endl;
 
     cout << endl;
 

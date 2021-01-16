@@ -3,6 +3,7 @@
 //
 
 #include "Graph.h"
+#include <iostream>
 
 using namespace std;
 
@@ -145,5 +146,89 @@ std::vector<MyVertex> Graph::getAdjacentVertices(MyVertex v) {
         }
     }
     return vector;
+}
+
+/**
+ * Liefert true wenn der Graph verbunden ist, sonst false
+ * @return true if connected, else false
+ */
+bool Graph::isConnected() {
+    int n = vertices.size();
+    int m = edges.size();
+    if (m == n*((n-1)/2)){
+        return true;
+    } else {
+        return false;
+    }
+}
+
+/**
+ * Gibt die Anzahl der Komponenten des Graphen zurück
+ * @return
+ */
+int Graph::getNumberOfComponents() {
+    return dfs();
+}
+
+/**
+ * Gibt die Knoten aller Komponenten aus (eine Zeile pro Komponente).
+ */
+void Graph::printComponents() {
+    components.clear();
+    dfs();
+    for (int i = 0; i < components.size(); ++i) {
+        for (int j = 0; j < components.at(i).size(); ++j) {
+            cout << components.at(i).at(j);
+        }
+        cout << endl;
+    }
+}
+
+/**
+ * Liefert true wenn der Graph Zyklen enthält, sonst false.
+ * @return if isCyclic, else false
+ */
+bool Graph::isCyclic() {
+    cyclic = false;
+    dfs();
+    return cyclic;
+}
+
+int Graph::dfs() {
+  vector<Color> colors;
+  for(auto v : vertices){
+      colors.push_back(WHITE);
+  }
+  int time = 0;
+  for (auto v : vertices){
+      if (colorOfVertex(v,colors) == WHITE){
+          components.push_back(vector<MyVertex>());
+          dfsVisit(v, colors, time, -1);
+          time = time +1;
+      }
+  }
+    return time;
+}
+
+void Graph::dfsVisit(MyVertex v, std::vector<Color> &colors, int time) {
+    colors[indexOfVertex(v)] = GRAY;
+    components.at(time).push_back(v);
+
+    for (auto adj_vertex : getAdjacentVertices(v)) {
+        if (colorOfVertex(adj_vertex, colors) == WHITE) {
+            dfsVisit(adj_vertex, colors, time);
+        }
+    }
+    colors[indexOfVertex(v)] = BLACK;
+    cyclic = true;
+}
+
+Color Graph::colorOfVertex(MyVertex v, std::vector<Color> colors) {
+    int index = indexOfVertex(v);
+    return colors.at(index);
+}
+
+int Graph::indexOfVertex(MyVertex v) {
+    return find(vertices.begin(), vertices.end(), v) - vertices.begin();
 }
 
