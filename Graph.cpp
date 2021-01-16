@@ -186,6 +186,9 @@ bool Graph::isCyclic() {
     return cyclic;
 }
 
+/**
+ * this method checks every node in the graph
+ */
 void Graph::dfs() {
   vector<Color> colors;
   for(auto v : vertices){
@@ -201,6 +204,12 @@ void Graph::dfs() {
   }
 }
 
+/**
+ * this method is a helping method of dfsVisit
+ * @param v is the given MyVertex object
+ * @param colors is the vector list of colors
+ * @param time is the given loop time
+ */
 void Graph::dfsVisit(MyVertex v, std::vector<Color> &colors, int time) {
     colors[indexOfVertex(v)] = GRAY;
     components.at(time).push_back(v);
@@ -221,11 +230,22 @@ void Graph::dfsVisit(MyVertex v, std::vector<Color> &colors, int time) {
     cyclic = true;
 }
 
+/**
+ * this method return the right color of given Vertex
+ * @param v is the given vertex
+ * @param colors is the given color vector
+ * @return the right color
+ */
 Color Graph::colorOfVertex(MyVertex v, std::vector<Color> colors) {
     int index = indexOfVertex(v);
     return colors.at(index);
 }
 
+/**
+ * this method return the index of the given vertex
+ * @param v is the given MyVertex object
+ * @return the index
+ */
 int Graph::indexOfVertex(MyVertex v) {
     return find(vertices.begin(), vertices.end(), v) - vertices.begin();
 }
