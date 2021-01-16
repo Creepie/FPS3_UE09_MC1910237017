@@ -70,7 +70,6 @@ std::vector<std::vector<int>> Graph::getAdjacencyMatrix() {
     }
 
     for (int i = 0; i < edges.size(); ++i) {
-
         //get x and y edges
         int x = find(vertices.begin(), vertices.end(), edges.at(i).in) - vertices.begin();
         int y = find(vertices.begin(), vertices.end(), edges.at(i).out) - vertices.begin();
@@ -83,6 +82,19 @@ std::vector<std::vector<int>> Graph::getAdjacencyMatrix() {
 }
 
 std::vector<MyVertex> Graph::getAdjacentVertices(MyVertex v) {
+    vector<MyVertex> vector;
 
+    for(int i = 0; i < edges.size(); i++){
+        if (edges.at(i).in.name == v.name){
+            if (find(vector.begin(), vector.end(), edges.at(i).in) == vector.end()){
+                vector.push_back(edges.at(i).out);
+            }
+        } else if (edges.at(i).out.name == v.name){
+            if (find(vector.begin(), vector.end(), edges.at(i).out) == vector.end()){
+                vector.push_back(edges.at(i).in);
+            }
+        }
+    }
+    return vector;
 }
 

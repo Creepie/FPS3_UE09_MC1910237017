@@ -43,6 +43,13 @@ int main() {
         cout << endl;
     }
 
+    vector<MyVertex> res = h->getAdjacentVertices(*v1);
+
+    cout << endl;
+    for (int i = 0; i < res.size(); ++i) {
+        cout << res.at(i) << endl;
+    }
+
 
     cout << endl;
 
