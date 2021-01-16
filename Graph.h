@@ -46,6 +46,8 @@ private:
     std::vector<MyVertex> vertices;
     std::vector<Edge> edges;
 
+    bool compareEdge(MyVertex v1, MyVertex v2, int weight);
+
 public:
     /* Erzeugt einen neuen Graphen */
     Graph();
@@ -78,7 +80,5 @@ public:
     std::vector<MyVertex> getAdjacentVertices(MyVertex v);
 
 };
-
-
 
 #endif //FPS3_UE09_MC1910237017_GRAPH_H
