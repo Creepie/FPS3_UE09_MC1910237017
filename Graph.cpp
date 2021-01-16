@@ -227,7 +227,7 @@ void Graph::dfsVisit(MyVertex v, std::vector<Color> &colors, int time) {
         }
     }
     colors[indexOfVertex(v)] = BLACK;
-    cyclic = true;
+
 }
 
 /**
