@@ -153,13 +153,7 @@ std::vector<MyVertex> Graph::getAdjacentVertices(MyVertex v) {
  * @return true if connected, else false
  */
 bool Graph::isConnected() {
-    int n = vertices.size();
-    int m = edges.size();
-    if (m == n*((n-1)/2)){
-        return true;
-    } else {
-        return false;
-    }
+    return getNumberOfComponents() == 1;
 }
 
 /**
@@ -167,7 +161,7 @@ bool Graph::isConnected() {
  * @return
  */
 int Graph::getNumberOfComponents() {
-    return dfs();
+    return components.size();
 }
 
 /**
@@ -189,12 +183,10 @@ void Graph::printComponents() {
  * @return if isCyclic, else false
  */
 bool Graph::isCyclic() {
-    cyclic = false;
-    dfs();
     return cyclic;
 }
 
-int Graph::dfs() {
+void Graph::dfs() {
   vector<Color> colors;
   for(auto v : vertices){
       colors.push_back(WHITE);
@@ -203,18 +195,24 @@ int Graph::dfs() {
   for (auto v : vertices){
       if (colorOfVertex(v,colors) == WHITE){
           components.push_back(vector<MyVertex>());
-          dfsVisit(v, colors, time, -1);
+          dfsVisit(v, colors, time);
           time = time +1;
       }
   }
-    return time;
 }
 
 void Graph::dfsVisit(MyVertex v, std::vector<Color> &colors, int time) {
     colors[indexOfVertex(v)] = GRAY;
     components.at(time).push_back(v);
+    int visited = 0;
 
     for (auto adj_vertex : getAdjacentVertices(v)) {
+        if (colorOfVertex(adj_vertex,colors) == GRAY){
+            visited++;
+            if (visited > 1){
+                cyclic = true;
+            }
+        }
         if (colorOfVertex(adj_vertex, colors) == WHITE) {
             dfsVisit(adj_vertex, colors, time);
         }
