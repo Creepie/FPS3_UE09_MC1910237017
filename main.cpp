@@ -31,6 +31,8 @@ int main() {
     cout << "getEdgeWeight v1 to v2: " << h->getEdgeWeight(*v1,*v2) << endl;
     cout << "getEdgeWeight v1 to v3: " << h->getEdgeWeight(*v1,*v3) << endl;
 
+    h->dfs();
+
 
     vector<MyVertex> vertices = h->getVertices();
     int numberOfVertices = h->getNumberOfVertices();
@@ -88,6 +90,8 @@ int main() {
 
     cout << "insertEdge v6 to v7: " <<h1->insertEdge(*v6,*v7,1) << endl;
     cout << "insertEdge v7 to v8: " <<h1->insertEdge(*v7,*v8,2) << endl;
+
+    h1->dfs();
 
     h1->printComponents();
 

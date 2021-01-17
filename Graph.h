@@ -50,7 +50,7 @@ private:
     bool cyclic = false;
 
     bool compareEdge(MyVertex v1, MyVertex v2, int weight);
-    void dfs();
+
     void dfsVisit(MyVertex v, std::vector<Color> &colors, int time);
     Color colorOfVertex(MyVertex v, std::vector<Color> colors);
     int indexOfVertex(MyVertex v);
@@ -103,6 +103,8 @@ public:
 
     // Liefert true wenn der Graph Zyklen enthält, sonst false.
     bool isCyclic();
+
+    void dfs();
 };
 
 #endif //FPS3_UE09_MC1910237017_GRAPH_H

@@ -134,13 +134,13 @@ std::vector<std::vector<int>> Graph::getAdjacencyMatrix() {
 std::vector<MyVertex> Graph::getAdjacentVertices(MyVertex v) {
     vector<MyVertex> vector;
 
-    for(int i = 0; i < edges.size(); i++){
-        if (edges.at(i).in.name == v.name){
-            if (find(vector.begin(), vector.end(), edges.at(i).in) == vector.end()){
+    for (int i = 0; i < edges.size(); i++) {
+        if (edges.at(i).in.name == v.name) {
+            if (find(vector.begin(), vector.end(), edges.at(i).in) == vector.end()) {
                 vector.push_back(edges.at(i).out);
             }
-        } else if (edges.at(i).out.name == v.name){
-            if (find(vector.begin(), vector.end(), edges.at(i).out) == vector.end()){
+        } else if (edges.at(i).out.name == v.name) {
+            if (find(vector.begin(), vector.end(), edges.at(i).out) == vector.end()) {
                 vector.push_back(edges.at(i).in);
             }
         }
@@ -168,8 +168,6 @@ int Graph::getNumberOfComponents() {
  * Gibt die Knoten aller Komponenten aus (eine Zeile pro Komponente).
  */
 void Graph::printComponents() {
-    components.clear();
-    dfs();
     for (int i = 0; i < components.size(); ++i) {
         for (int j = 0; j < components.at(i).size(); ++j) {
             cout << components.at(i).at(j);
@@ -190,18 +188,20 @@ bool Graph::isCyclic() {
  * this method checks every node in the graph
  */
 void Graph::dfs() {
-  vector<Color> colors;
-  for(auto v : vertices){
-      colors.push_back(WHITE);
-  }
-  int time = 0;
-  for (auto v : vertices){
-      if (colorOfVertex(v,colors) == WHITE){
-          components.push_back(vector<MyVertex>());
-          dfsVisit(v, colors, time);
-          time = time +1;
-      }
-  }
+    components.clear();
+    cyclic = false;
+    vector<Color> colors;
+    for (auto v : vertices) {
+        colors.push_back(WHITE);
+    }
+    int time = 0;
+    for (auto v : vertices) {
+        if (colorOfVertex(v, colors) == WHITE) {
+            components.push_back(vector<MyVertex>());
+            dfsVisit(v, colors, time);
+            time = time + 1;
+        }
+    }
 }
 
 /**
@@ -216,9 +216,9 @@ void Graph::dfsVisit(MyVertex v, std::vector<Color> &colors, int time) {
     int visited = 0;
 
     for (auto adj_vertex : getAdjacentVertices(v)) {
-        if (colorOfVertex(adj_vertex,colors) == GRAY){
+        if (colorOfVertex(adj_vertex, colors) == GRAY) {
             visited++;
-            if (visited > 1){
+            if (visited > 1) {
                 cyclic = true;
             }
         }
